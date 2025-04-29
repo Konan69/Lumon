@@ -81,5 +81,5 @@ or
 'after setting env variables'
 
 ```bash
-docker-compose up
+docker compose up
 ```
