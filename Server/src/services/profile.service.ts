@@ -1,5 +1,4 @@
 import { prisma } from "../app";
-import type { User } from "@prisma/client";
 import { ForbiddenError, NotFoundError } from "../errors";
 
 export const getProfile = async (id: string) => {

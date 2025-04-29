@@ -5,7 +5,8 @@ import { AuthUser } from "@supabase/supabase-js";
 export const createTask = async (
   user: AuthUser,
   title: string,
-  status: string
+  status: string,
+  categoryId?: string
 ) => {
   const task = prisma.task.create({
     data: {
@@ -16,9 +17,11 @@ export const createTask = async (
           id: user.id,
         },
       },
-    },
-    include: {
-      user: true,
+      Category: {
+        connect: {
+          id: categoryId,
+        },
+      },
     },
   });
   return task;
@@ -27,6 +30,9 @@ export const createTask = async (
 export const getTasks = async (user: AuthUser) => {
   const tasks = await prisma.task.findMany({
     where: { user: { id: user.id } },
+    include: {
+      Category: true,
+    },
   });
   return tasks;
 };
@@ -34,7 +40,8 @@ export const getTasks = async (user: AuthUser) => {
 export const updateTask = async (
   taskId: string,
   title?: string,
-  status?: string
+  status?: string,
+  categoryId?: string
 ) => {
   // Build update object with only provided fields
   const updateFields = {};

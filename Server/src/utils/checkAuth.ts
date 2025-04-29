@@ -9,7 +9,7 @@ export const checkAuth = async (
   res: Response,
   next: NextFunction
 ) => {
-  const token = req.header("Authorization").replace("Bearer ", "");
+  const token = req.header("Authorization")?.replace("Bearer ", "");
 
   if (token == null) {
     return next(new UnauthorizedError("Token is invalid"));

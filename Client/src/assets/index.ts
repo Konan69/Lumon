@@ -1,6 +1,6 @@
 import Logo from "./Logo.jpeg";
-import Home from "./home.svg";
-import Options from "./options.svg";
-import Logout from "./log-out.svg";
+import Home from "./Home.svg";
+import Options from "./Options.svg";
+import Logout from "./Log-out.svg";
 
 export { Logo, Home, Logout, Options };

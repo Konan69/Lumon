@@ -3,7 +3,7 @@ import {
   getAuthRequest,
   patchAuthRequest,
   postAuthRequest,
-} from "../../lib/apiClient";
+} from "../lib/apiClient";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Task } from "@/types";
 import toast from "react-hot-toast";
@@ -21,17 +21,22 @@ const useGetTasks = () => {
 const useCreateTask = () => {
   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: async (task: Partial<Task>) => {
-      const response = await postAuthRequest("tasks/create", task);
+  return useMutation<
+    Task,
+    Error,
+    { title: string; status: string; categoryId?: string }
+  >({
+    mutationFn: async (taskData) => {
+      const response = await postAuthRequest("tasks/create", taskData);
       return response.task;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      queryClient.invalidateQueries({ queryKey: ["Categories"] });
       toast.success("Task created successfully");
     },
-    onError: () => {
-      toast.error("Failed to create task");
+    onError: (error) => {
+      toast.error(`Failed to create task`);
     },
   });
 };

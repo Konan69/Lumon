@@ -13,15 +13,24 @@ const getTasks = async (req: Request, res: Response) => {
 
 const createTask = async (req: Request, res: Response) => {
   const user = req.user;
-  const { title, status }: { title: string; status: string } = req.body;
-  const task = await taskService.createTask(user, title, status);
+  const {
+    title,
+    status,
+    categoryId,
+  }: { title: string; status: string; categoryId: string } = req.body;
+  const task = await taskService.createTask(user, title, status, categoryId);
   res.status(httpStatus.CREATED).json({ task });
 };
 
 const updateTask = async (req: Request, res: Response) => {
   const { taskId } = req.params;
-  const { title, status } = req.body;
-  const updatedTask = await taskService.updateTask(taskId, title, status);
+  const { title, status, categoryId } = req.body;
+  const updatedTask = await taskService.updateTask(
+    taskId,
+    title,
+    status,
+    categoryId
+  );
   if (!updatedTask) {
     throw new InternalServerError("Failed to update task");
   }

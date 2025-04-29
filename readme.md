@@ -3,60 +3,83 @@
 ## Frontend Design Decisions 🎨
 
 ### UI/UX
-- Adopted SportX's green and black color scheme for brand consistency
+
+- Adopted Founder's arm's green and black color scheme for brand consistency
 - Utilized shadcn UI components for a clean, modern interface
-- Implemented full mobile responsiveness
-- Added toast notifications for better user feedback
+- managed client side state with zustand
+- manages server side state(data fetching) on the client with react-query
+- Loading skeleton for user experience
+- Added toast notifications for user feedback
 
 ### Features
+
+- signup and login with email and password powered by supabase
+- protected the dashboard with supabase session token
 - Built a Kanban board with drag-and-drop functionality (inspired by Trello/Jira)
-- Implemented drag-and-drop mostly manually because it seemed fun! 😄
-- Added support for mobile touch events
-- Implemented optimistic updates for smooth UX with appropriate fallbacks
+- Implemented drag-and-drop with dndkit for smoother user experience
+- Implemented optimistic updates to api calls for smooth UX with appropriate fallbacks
 
 ### Technical Stack
-- **State Management**: Zustand (with localStorage persistence)
+
+- **State Management**: Zustand (with localStorage persistence where necessary)
 - **Data Fetching**: TanStack Query + Axios
 - **Routing**: React Router with protected routes
-- **Auth**: JWT tokens managed with js-cookie
-- **Testing**: Vitest + React Testing Library
-
-### Future Improvements 🚀
-- Expand test coverage
-- Add Framer Motion animations
-- Implement loading skeletons for data fetching states
+- **Auth**: Supabase
+- **Styling**: TailwindCSS
+- **UI Components**: Shadcn UI
 
 ## Backend Design Decisions 🛠️
 
 ### Architecture
-- Custom error handling with extended Error class
-- Protected endpoints with custom middleware
-- Request validation for body and params
+
+- route - controller - service - architecture
+
+  - route: handles incoming requests and delegates to controller
+  - controller: handles business logic and calls service to interact with the database
+  - service: interacts with the database and performs necessary operations
+
+- Custom error handling with extended Error classes
+- Protected endpoints with custom middleware extending supabase auth
+- Request validation for body and params using zod
 - Environment-based logic handling (development/production)
 
-### Testing
-- Jest for unit testing
-- Supertest for API testing
+### Technical Stack
 
-### Future Improvements 🎯
-- Add Swagger/OpenAPI documentation
+- **Database**: PostreSQL through supabase
+- **ORm**: Prisma (Supabase db triggers for consistency)
+- **Routing**: Express
+- **Validation**: Zod
+- **LOGGING**: Pino
 
 ## Getting Started 🚀
 
+## ai assisntant use
+
+- initial scaffolding
+- working with unfamiliar libraries (dndkit)
+- generating db trigger scripts
+
 ### Client Setup
+
 ```bash
-cd client 
+cd client
+create .env file and add thevariables
 npm install
 npm run dev
 ```
 
 ### Server Setup
+
 ```bash
-cd server 
+cd server
 yarn install
 npm run dev
 ```
 
+or
 
-or docker 
-(still in progress)
+'after setting env variables'
+
+```bash
+docker-compose up
+```
